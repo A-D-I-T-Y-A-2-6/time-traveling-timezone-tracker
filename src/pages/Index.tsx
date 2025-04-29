@@ -41,6 +41,7 @@ const Index = () => {
                 locationName={indiaTimeZone.locationName}
                 className="transform transition-all"
                 size="large"
+                referenceTimeZone={selectedTimeZone.timeZone}
               />
               <TimeZoneDisplay
                 timeZone={selectedTimeZone.timeZone}

@@ -58,7 +58,13 @@ const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
     if (hourDifference < -12) hourDifference += 24;
     
     const sign = hourDifference >= 0 ? "+" : "";
-    timeDifferenceText = `${sign}${hourDifference} hours from India`;
+    
+    // Customize message based on the location name
+    if (locationName === "India") {
+      timeDifferenceText = `${sign}${hourDifference} hours from selected country`;
+    } else {
+      timeDifferenceText = `${sign}${hourDifference} hours from India`;
+    }
   }
 
   const timeTextSize = size === "large" ? "text-6xl" : "text-4xl";
