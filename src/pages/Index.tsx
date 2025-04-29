@@ -40,6 +40,7 @@ const Index = () => {
                 timeZone={indiaTimeZone.timeZone}
                 locationName={indiaTimeZone.locationName}
                 className="transform transition-all"
+                size="large"
               />
               <TimeZoneDisplay
                 timeZone={selectedTimeZone.timeZone}
@@ -52,6 +53,7 @@ const Index = () => {
               timeZone={indiaTimeZone.timeZone}
               locationName={indiaTimeZone.locationName}
               className="transform transition-all"
+              size="large"
             />
           )}
         </div>

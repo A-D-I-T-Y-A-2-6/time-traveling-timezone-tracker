@@ -8,12 +8,14 @@ interface TimeZoneDisplayProps {
   timeZone: string;
   locationName: string;
   className?: string;
+  size?: "default" | "large";
 }
 
 const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
   timeZone,
   locationName,
   className = "",
+  size = "default",
 }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -39,13 +41,17 @@ const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
     "EEE, MMM dd, yyyy"
   );
 
+  const timeTextSize = size === "large" ? "text-6xl" : "text-4xl";
+  const cardSize = size === "large" ? "min-w-[400px]" : "min-w-[300px]";
+  const locationSize = size === "large" ? "text-2xl" : "text-xl";
+
   return (
-    <Card className={`min-w-[300px] ${className}`}>
+    <Card className={`${cardSize} ${className}`}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-bold">{locationName}</CardTitle>
+        <CardTitle className={`${locationSize} font-bold`}>{locationName}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-4xl font-bold mb-2">{formattedTime}</div>
+        <div className={`${timeTextSize} font-bold mb-2`}>{formattedTime}</div>
         <div className="text-muted-foreground">{formattedDate}</div>
         <div className="text-sm text-muted-foreground mt-2">{timeZone}</div>
       </CardContent>
