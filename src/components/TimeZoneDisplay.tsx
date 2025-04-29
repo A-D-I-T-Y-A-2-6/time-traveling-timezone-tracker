@@ -9,6 +9,7 @@ interface TimeZoneDisplayProps {
   locationName: string;
   className?: string;
   size?: "default" | "large";
+  referenceTimeZone?: string;
 }
 
 const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
@@ -16,6 +17,7 @@ const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
   locationName,
   className = "",
   size = "default",
+  referenceTimeZone,
 }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -41,6 +43,24 @@ const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
     "EEE, MMM dd, yyyy"
   );
 
+  // Calculate time difference if reference timezone is provided
+  let timeDifferenceText = "";
+  if (referenceTimeZone) {
+    // Get hours in both timezones
+    const currentHour = parseInt(formatInTimeZone(currentTime, timeZone, "H"));
+    const referenceHour = parseInt(formatInTimeZone(currentTime, referenceTimeZone, "H"));
+    
+    // Calculate difference (can be negative)
+    let hourDifference = currentHour - referenceHour;
+    
+    // Handle day boundary cases
+    if (hourDifference > 12) hourDifference -= 24;
+    if (hourDifference < -12) hourDifference += 24;
+    
+    const sign = hourDifference >= 0 ? "+" : "";
+    timeDifferenceText = `${sign}${hourDifference} hours from India`;
+  }
+
   const timeTextSize = size === "large" ? "text-6xl" : "text-4xl";
   const cardSize = size === "large" ? "min-w-[400px]" : "min-w-[300px]";
   const locationSize = size === "large" ? "text-2xl" : "text-xl";
@@ -54,6 +74,11 @@ const TimeZoneDisplay: React.FC<TimeZoneDisplayProps> = ({
         <div className={`${timeTextSize} font-bold mb-2`}>{formattedTime}</div>
         <div className="text-muted-foreground">{formattedDate}</div>
         <div className="text-sm text-muted-foreground mt-2">{timeZone}</div>
+        {timeDifferenceText && (
+          <div className="text-sm font-medium text-blue-500 mt-2">
+            {timeDifferenceText}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
